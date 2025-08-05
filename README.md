@@ -73,7 +73,7 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 -run required libraries (`install_required_libraries.py`) in '/scripts'
 -or
 ```bash
-  pip install pandas sqlalchemy psycopg2-python python-dotenv 
+  pip install pandas sqlalchemy psycopg2 python-dotenv 
   ```
 
 
