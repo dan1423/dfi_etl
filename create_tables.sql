@@ -85,45 +85,6 @@ CREATE TABLE lab_component_snomed_map (
     confidence_score REAL
 );
 
-CREATE TABLE  procedure_cpt (
-    procedure_cpt_id SERIAL PRIMARY KEY,
-    subject_id INTEGER REFERENCES subjects(id),
-    cpt_code TEXT,
-    proc_name TEXT,
-    min_service_date TEXT,
-    max_service_date TEXT
-);
-CREATE TABLE  procedure_icd (
-    procedure_icd_id SERIAL PRIMARY KEY,
-    subject_id INTEGER REFERENCES subjects(id),
-    icd_code TEXT,
-    proc_date TEXT
-);
-
-CREATE TABLE treatment_type (
-    id SERIAL PRIMARY KEY,
-    type_name TEXT,
-    description TEXT
-);
-
-CREATE TABLE treatment_option (
-    id SERIAL PRIMARY KEY,
-    name TEXT,
-    code TEXT,
-    code_type TEXT,
-    treatment_type_id INTEGER REFERENCES treatment_type(id)
-);
-
-CREATE TABLE treatment_protocol (
-    id SERIAL PRIMARY KEY,
-    date_administered TEXT,
-    disease_id INTEGER REFERENCES disease(disease_id),
-    treatment_option_id INTEGER REFERENCES treatment_option(id)
-);
-
-
-
-
 
 CREATE TABLE lab (
     lab_id SERIAL PRIMARY KEY,
@@ -168,7 +129,8 @@ CREATE TABLE medication (
     take_med_dose TEXT,
     take_med_dttm TEXT,
     rxnorm_code INTEGER,
-    atc_code TEXT 
+    atc_code TEXT,
+    treatment_id INTEGER REFERENCES treatment(treatment_id), 
 );
 
 -- Vitals
@@ -230,6 +192,19 @@ CREATE TABLE liver_disease (
     ecog_score INTEGER,
     icd10_code TEXT
 );
+CREATE TABLE treatment (
+    treatment_id SERIAL PRIMARY KEY,
+    subject_id INTEGER REFERENCES subjects(id),
+    disease_id INTEGER REFERENCES disease(disease_id),
+    treatment_name TEXT,      
+    treatment_type TEXT,       
+    cpt_code TEXT,             
+    icd_proc_code TEXT,        
+    start_date DATE,
+    end_date DATE,
+    notes TEXT
+);
+
 
 -- Metabolomics & Metagenomics
 CREATE TABLE metabolomics (
