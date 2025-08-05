@@ -114,6 +114,19 @@ CREATE TABLE medication_atc_code_map (
     atc_code TEXT PRIMARY KEY,
     atc_name TEXT
 );
+CREATE TABLE treatment (
+    treatment_id SERIAL PRIMARY KEY,
+    subject_id INTEGER REFERENCES subjects(id),
+    disease_id INTEGER REFERENCES disease(disease_id),
+    treatment_name TEXT,      
+    treatment_type TEXT,       
+    cpt_code TEXT,             
+    icd_proc_code TEXT,        
+    start_date DATE,
+    end_date DATE,
+    notes TEXT
+);
+
 
 CREATE TABLE medication (
     medication_id SERIAL PRIMARY KEY,
@@ -130,7 +143,7 @@ CREATE TABLE medication (
     take_med_dttm TEXT,
     rxnorm_code INTEGER,
     atc_code TEXT,
-    treatment_id INTEGER REFERENCES treatment(treatment_id), 
+    treatment_id INTEGER REFERENCES treatment(treatment_id)
 );
 
 -- Vitals
@@ -191,18 +204,6 @@ CREATE TABLE liver_disease (
     he_grade TEXT ,
     ecog_score INTEGER,
     icd10_code TEXT
-);
-CREATE TABLE treatment (
-    treatment_id SERIAL PRIMARY KEY,
-    subject_id INTEGER REFERENCES subjects(id),
-    disease_id INTEGER REFERENCES disease(disease_id),
-    treatment_name TEXT,      
-    treatment_type TEXT,       
-    cpt_code TEXT,             
-    icd_proc_code TEXT,        
-    start_date DATE,
-    end_date DATE,
-    notes TEXT
 );
 
 
