@@ -54,7 +54,7 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 │   │   │   ├── transform_icd10.py
 │   │   │   ├── transform_ehr.py
 │   ├── useful items/
-│   │   ├── orginial_data_sources.zip
+│   │   
 │   │   ├── liver_disease_grading_systems.sql
 
 ```
@@ -67,6 +67,7 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 - PostgreSQL server running and schema initialized
 - Environment variables or `.env` file set for DB credentials
 - create database
+- Unzip standardized_vocabularies.zip
 - Required Python packages:
   
 -run required libraries (`install_required_libraries.py`) in '/scripts'
