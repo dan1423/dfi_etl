@@ -98,7 +98,7 @@ python scripts/create_database_tables.py
 python scripts/transform_scripts/transform_ehr.py
 ```
 
-- ### Step 3.2 Extract approriate data from standardized vocabularies
+### Step 3.2 Extract approriate data from standardized vocabularies
 -run the following scripts:
  ```bash
 python scripts/transform_scripts/transform_loinc.py
