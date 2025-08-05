@@ -8,6 +8,13 @@ output_dir = project_root / "ehr_data" / "cleaned"
 mapping_file = output_dir / "subjects.csv"
 output_dir.mkdir(parents=True, exist_ok=True)
 
+# === Check if cleaned folder already has files ===
+if any(output_dir.glob("*.csv")):
+    print(f"The folder {output_dir} already contains CSV files.")
+    print("Please clear the folder before running this script to avoid overwriting or appending.")
+    raise SystemExit(1)  # Stop the script
+
+
 # === Config: PostgreSQL column order for each table ===
 column_config = {
     "demographics": [
@@ -109,7 +116,13 @@ for raw_file, table_name in tables_map.items():
         df = transform_columns(df, table_name)
 
     output_file = output_dir / f"{raw_file}.csv"
-    df.to_csv(output_file, index=False)
-    print(f"Saved {raw_file} to {output_file}")
+    if not output_file.exists():
+        df.to_csv(output_file, index=False)
+        print(f"Saved {raw_file} to {output_file}")
+    else:
+        print(f"Skipped: {output_file} already exists")
 
-print("All tables processed successfully.")
+print("Complete transformation of tables.")
+
+
+    
