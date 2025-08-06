@@ -91,15 +91,15 @@ python unzip_vocabulary_folder.py
 python scripts/create_database_tables.py
  ```
 
-### Step 2: Extract
-- Copy all raw ehr data files (e.g.,`labs.txt`, `medications.txt`) into the `ehr_data/raw` 
+### Step 2: Extract(skip)
+- Copy all raw ehr data files (e.g.,`labs.txt`, `medications.txt`) into the `ehr_data/raw`
 
 - Copy all standardized vocabulary files (e.g.,`loinc.csv`,`RXNCONSO.RRF`) into the `standard_vocabularies/raw/{folder_name} e.g. standardized_vocabularies/raw/loinc/loinc.csv` folder
 
 ### Step 3.1: Transform internal ehr data (skip this step for this project) 
 -Transformation of ehr data needs to be improved in the future when accessing real data. This step requires extracting columns from 22 files from data dump.
 
-### Step 3.2: Transform internal ehr data -  and 
+### Step 3.2: Transform internal ehr data -   
 -renames tables to match database columns
 -generates subject ids based on demographics data and maps to other data
 -run the following script:
