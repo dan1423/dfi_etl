@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS lab_component_snomed_map (
 );
 
 
-CREATE TABLE IF NOT EXISTS lab (
+CREATE TABLE IF NOT EXISTS labs (
     lab_id SERIAL PRIMARY KEY,
      subject_id INTEGER REFERENCES subjects(id),
     mrn TEXT,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS treatment (
 );
 
 
-CREATE TABLE IF NOT EXISTS medication (
+CREATE TABLE IF NOT EXISTS medications (
     medication_id SERIAL PRIMARY KEY,
     subject_id INTEGER REFERENCES subjects(id),
     mrn TEXT,
