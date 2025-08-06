@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,text
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -25,9 +25,9 @@ engine = create_engine(db_url)
 vocab_tables = {
     "atc.csv": "medication_atc_code_map",
     "rxnorm.csv": "medication_rxnorm_code_map",
-    "icd10_codes.csv": "icd10_codes",
-    "icd10_ranges.csv": "icd10_ranges",
     "icd10_chapters.csv": "icd10_chapters",
+    "icd10_ranges.csv": "icd10_ranges",
+    "icd10_codes.csv": "icd10_codes",
     "loinc.csv": "lab_component_loinc_map",
     "snomed.csv": "lab_component_snomed_map"
 }
@@ -42,9 +42,12 @@ for rel_path, table_name in vocab_tables.items():
 
     print(f"Loading {csv_path} into {table_name}...")
     df = pd.read_csv(csv_path, dtype=str)
-
+    # clear table before importing
+    with engine.begin() as conn:
+        conn.execute(text(f'TRUNCATE TABLE {table_name} CASCADE'))
+    
     # Insert into PostgreSQL
-    df.to_sql(table_name, engine, if_exists="fail", index=False)
+    df.to_sql(table_name, engine, if_exists="append", index=False)
     print(f"Inserted {len(df)} rows into {table_name}.")
 
 print("All vocabularies loaded successfully.")

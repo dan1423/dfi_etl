@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,inspect
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -18,6 +18,7 @@ pg_database = os.getenv("PG_DATABASE")
 
 db_url = f"postgresql+psycopg2://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_database}"
 engine = create_engine(db_url)
+inspector = inspect(engine)
 
 # === File Paths & Table Names ===
 
@@ -35,10 +36,19 @@ print(f"Loading data from {ehr_dir} into PostgreSQL database '{pg_database}'")
 for file_stem, table_name in files_to_load.items():
     file_path = ehr_dir / file_stem
     if file_path.exists():
-        df = pd.read_csv(file_path,sep=",", engine="python")
+        df = pd.read_csv(file_path, sep=",", engine="python")
         print(df.columns.tolist())
-        df.to_sql(table_name, engine, if_exists="fail", index=False)
-        print(f"Loaded {len(df)} rows into '{table_name}'")
+
+        if table_name in inspector.get_table_names():
+            # Append if exists
+            df.to_sql(table_name, engine, if_exists="append", index=False)
+            print(f"Appended {len(df)} rows to existing table '{table_name}'")
+        else:
+            # Create if doesn't exist
+            df.to_sql(table_name, engine, if_exists="fail", index=False)
+            print(f"Created table '{table_name}' and inserted {len(df)} rows")
+
     else:
         print(f"File not found: {file_path}")
+
 print("Data loading complete.")

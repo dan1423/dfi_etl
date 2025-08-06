@@ -32,7 +32,7 @@ observable_df = merged_df[merged_df["term"].str.contains("observable entity", ca
 # === Prepare final DataFrame ===
 final_df = pd.DataFrame()
 final_df["snomed_code"] = observable_df["conceptId"]
-final_df["fully_specified_name"] = observable_df["term"]
+final_df["snomed_term"] = observable_df["term"]
 final_df["hierarchy_type"] = "Observable Entity"
 final_df = final_df.drop_duplicates(subset=["snomed_code"])
 

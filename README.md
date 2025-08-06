@@ -54,7 +54,7 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 │   │   │   ├── transform_icd10.py
 │   │   │   ├── transform_ehr.py
 │   ├── useful items/
-│   │   
+│   │   ├── orginial_data_sources.zip
 │   │   ├── liver_disease_grading_systems.sql
 
 ```
@@ -67,13 +67,12 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 - PostgreSQL server running and schema initialized
 - Environment variables or `.env` file set for DB credentials
 - create database
-- Unzip standardized_vocabularies.zip
 - Required Python packages:
   
 -run required libraries (`install_required_libraries.py`) in '/scripts'
 -or
 ```bash
-  pip install pandas sqlalchemy psycopg2 python-dotenv 
+  pip install pandas sqlalchemy psycopg2-python python-dotenv 
   ```
 
 
@@ -89,7 +88,7 @@ python scripts/create_database_tables.py
 
 - Copy all standardized vocabulary files (e.g.,`loinc.csv`,`RXNCONSO.RRF`) into the `standard_vocabularies/raw/{folder_name} e.g. standardized_vocabularies/raw/loinc/loinc.csv` folder
 
-### Step 3.1: Transform internal ehr data (skip this step for this project) 
+# Step 3.1: Transform internal ehr data (skip this step for this project) 
 -Transformation of ehr data needs to be improved in the future when accessing real data
 -Current transformation renames file columns to match schema columns
 -It also enerates subject ids by assessing demographics table for current patients and mapping mrns accross tables
@@ -98,7 +97,7 @@ python scripts/create_database_tables.py
 python scripts/transform_scripts/transform_ehr.py
 ```
 
-### Step 3.2 Extract approriate data from standardized vocabularies
+- # Step 3.2 Extract approriate data from standardized vocabularies
 -run the following scripts:
  ```bash
 python scripts/transform_scripts/transform_loinc.py
@@ -125,7 +124,7 @@ python scripts/transform_scripts/transform_icd10.py
 
 ---
 
-###  Notes
+##  Notes
 
 - Always rerun `transform` scripts if raw files are updated.
 - Re-run `load` scripts only after verifying transformation outputs.

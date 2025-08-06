@@ -1,10 +1,10 @@
 
-CREATE TABLE subjects (
+CREATE TABLE IF NOT EXISTS subjects (
     id SERIAL PRIMARY KEY,
     mrn TEXT UNIQUE
 );
 
-CREATE TABLE demographics (
+CREATE TABLE IF NOT EXISTS demographics (
    id SERIAL PRIMARY KEY,    
     subject_id INTEGER REFERENCES subjects(id),          
     mrn TEXT,                                     
@@ -17,21 +17,21 @@ CREATE TABLE demographics (
     death_date DATE
 );
 
-CREATE TABLE encounter (
+CREATE TABLE IF NOT EXISTS encounter (
     encounter_id SERIAL PRIMARY KEY,
     subject_id INTEGER REFERENCES subjects(id),
     encounter_type TEXT,
     encounter_date TEXT
 );
 
-CREATE TABLE disease (
+CREATE TABLE IF NOT EXISTS disease (
     disease_id SERIAL PRIMARY KEY,
     disease_name TEXT,
     description TEXT,
     icd10_code TEXT
 );
 
-CREATE TABLE diagnosis (
+CREATE TABLE IF NOT EXISTS diagnosis (
     diagnosis_id SERIAL PRIMARY KEY,
      subject_id INTEGER REFERENCES subjects(id),
     encounter INTEGER REFERENCES encounter(encounter_id),
@@ -42,51 +42,48 @@ CREATE TABLE diagnosis (
     dxrank_id INTEGER
 );
 
-CREATE TABLE icd10_chapters
+CREATE TABLE IF NOT EXISTS icd10_chapters
 (
     chapter integer  PRIMARY KEY,
-    code_range TEXT,
     description TEXT
 );
-CREATE TABLE icd10_code_ranges (
+CREATE TABLE IF NOT EXISTS icd10_code_ranges (
     code_range_id SERIAL PRIMARY KEY,
     chapter INTEGER REFERENCES icd10_chapters(chapter),
-    code_range TEXT,
+    code_range TEXT UNIQUE,
     description TEXT
 );
 
 
-CREATE TABLE icd10_codes (
-    code TEXT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS icd10_codes (
+    icd10_id SERIAL PRIMARY KEY,
+    code TEXT,
     description TEXT,
-    subchapter_id INTEGER REFERENCES icd10_code_ranges(code_range_id)
+    code_range TEXT
 );
 
 -- Labs
-CREATE TABLE lab_component_loinc_map (
+CREATE TABLE IF NOT EXISTS lab_component_loinc_map (
     id SERIAL PRIMARY KEY,
     loinc_code TEXT UNIQUE,
     component TEXT,
-    property TEXT,
     system TEXT,
-    class TEXT,
     class_type INTEGER,
     long_common_name TEXT,
-    ucum_units TEXT,
-    display_name TEXT
+    ucum_units TEXT
+
 );
 
-CREATE TABLE lab_component_snomed_map (
+CREATE TABLE IF NOT EXISTS lab_component_snomed_map (
     id SERIAL PRIMARY KEY,
-    component_name TEXT,
-    proc_name TEXT,
     snomed_code TEXT,
     snomed_term TEXT,
-    confidence_score REAL
+    hierarchy_type TEXT
+
 );
 
 
-CREATE TABLE lab (
+CREATE TABLE IF NOT EXISTS lab (
     lab_id SERIAL PRIMARY KEY,
      subject_id INTEGER REFERENCES subjects(id),
     mrn TEXT,
@@ -104,17 +101,17 @@ CREATE TABLE lab (
 );
 
 -- Medications
-CREATE TABLE medication_rxnorm_code_map (
+CREATE TABLE IF NOT EXISTS medication_rxnorm_code_map (
     id SERIAL PRIMARY KEY,
     rxcui INTEGER,
     medication_name TEXT
 );
 
-CREATE TABLE medication_atc_code_map (
+CREATE TABLE IF NOT EXISTS medication_atc_code_map (
     atc_code TEXT PRIMARY KEY,
     atc_name TEXT
 );
-CREATE TABLE treatment (
+CREATE TABLE IF NOT EXISTS treatment (
     treatment_id SERIAL PRIMARY KEY,
     subject_id INTEGER REFERENCES subjects(id),
     disease_id INTEGER REFERENCES disease(disease_id),
@@ -128,7 +125,7 @@ CREATE TABLE treatment (
 );
 
 
-CREATE TABLE medication (
+CREATE TABLE IF NOT EXISTS medication (
     medication_id SERIAL PRIMARY KEY,
     subject_id INTEGER REFERENCES subjects(id),
     mrn TEXT,
@@ -147,7 +144,7 @@ CREATE TABLE medication (
 );
 
 -- Vitals
-CREATE TABLE vital (
+CREATE TABLE IF NOT EXISTS vital (
     vital_id SERIAL PRIMARY KEY,
     subject_id INTEGER REFERENCES subjects(id),
     measurement_name TEXT,
@@ -160,39 +157,39 @@ CREATE TABLE vital (
 );
 
 -- Liver Disease Scores
-CREATE TABLE liver_child_pugh_score_reference (
+CREATE TABLE IF NOT EXISTS liver_child_pugh_score_reference (
     parameter TEXT PRIMARY KEY,
     value_range TEXT,
     score INTEGER,
     description TEXT
 );
 
-CREATE TABLE liver_ecog_performance_status (
+CREATE TABLE IF NOT EXISTS liver_ecog_performance_status (
     ecog_score INTEGER PRIMARY KEY,
     description TEXT
 );
 
-CREATE TABLE liver_meld_score_reference (
+CREATE TABLE IF NOT EXISTS liver_meld_score_reference (
     meld_range TEXT PRIMARY KEY,
     description TEXT
 );
 
-CREATE TABLE liver_ascites_grading (
+CREATE TABLE IF NOT EXISTS liver_ascites_grading (
     grade TEXT PRIMARY KEY,
     description TEXT
 );
 
-CREATE TABLE liver_hepatic_encephalopathy_grading (
+CREATE TABLE IF NOT EXISTS liver_hepatic_encephalopathy_grading (
     grade TEXT PRIMARY KEY,
     description TEXT
 );
 
-CREATE TABLE liver_fibrosis_stage_reference (
+CREATE TABLE IF NOT EXISTS liver_fibrosis_stage_reference (
     stage TEXT PRIMARY KEY,
     description TEXT
 );
 
-CREATE TABLE liver_disease (
+CREATE TABLE IF NOT EXISTS liver_disease (
     liver_disease_id SERIAL PRIMARY KEY,
     diagnosis_date DATE,
     disease_id INTEGER REFERENCES disease(disease_id),
@@ -208,7 +205,7 @@ CREATE TABLE liver_disease (
 
 
 -- Metabolomics & Metagenomics
-CREATE TABLE metabolomics (
+CREATE TABLE IF NOT EXISTS metabolomics (
     metabolomics_id TEXT,
     mrn TEXT,
     subject_id INTEGER REFERENCES subjects(id),
@@ -222,7 +219,7 @@ CREATE TABLE metabolomics (
     value_um TEXT
 );
 
-CREATE TABLE metagenomics (
+CREATE TABLE IF NOT EXISTS metagenomics (
     result_id TEXT,
     mrn TEXT,
      subject_id INTEGER REFERENCES subjects(id),

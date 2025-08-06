@@ -10,13 +10,11 @@ output_csv_path = project_root /"standardized_vocabularies"/"cleaned"/"loinc.csv
 column_map = {
     "LOINC_NUM": "loinc_code",
     "COMPONENT": "component",
-    "PROPERTY": "property",
     "SYSTEM": "system",
-    "CLASS": "class",
     "CLASSTYPE": "class_type",
     "LONG_COMMON_NAME": "long_common_name",
-    "EXAMPLE_UCUM_UNITS": "ucum_units",
-    "DisplayName": "display_name"
+    "EXAMPLE_UCUM_UNITS": "ucum_units"
+
 }
 
 # === Load raw LOINC file ===
