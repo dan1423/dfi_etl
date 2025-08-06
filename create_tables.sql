@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS labs (
     mrn TEXT,
     component_id TEXT,
     component_name TEXT,
-    ord_value INTEGER,
+    ord_value TEXT,
     result_in_range_yn TEXT,
     reference_unit TEXT,
     result_flag TEXT,
