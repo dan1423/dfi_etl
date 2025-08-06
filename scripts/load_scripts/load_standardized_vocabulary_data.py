@@ -26,7 +26,7 @@ vocab_tables = {
     "atc.csv": "medication_atc_code_map",
     "rxnorm.csv": "medication_rxnorm_code_map",
     "icd10_chapters.csv": "icd10_chapters",
-    "icd10_ranges.csv": "icd10_ranges",
+    "icd10_code_ranges.csv": "icd10_code_ranges",
     "icd10_codes.csv": "icd10_codes",
     "loinc.csv": "lab_component_loinc_map",
     "snomed.csv": "lab_component_snomed_map"
