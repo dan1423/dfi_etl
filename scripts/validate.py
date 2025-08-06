@@ -33,12 +33,20 @@ validation_rules = {
         "required_columns": ["code", "description"],
         "unique_columns": ["code"]
     },
+     "icd10_chapters": {
+        "required_columns": ["chapter", "description"],
+        "unique_columns": ["chapter"]
+    },
+     "icd10_code_ranges": {
+        "required_columns": ["chapter", "code_range","description"],
+        "unique_columns": ["code_range"]
+    },
     "lab_component_loinc_map": {
         "required_columns": ["loinc_code", "component"],
         "unique_columns": ["loinc_code"]
     },
     "lab_component_snomed_map": {
-        "required_columns": ["snomed_code", "component_name"],
+        "required_columns": ["snomed_code", "snomed_term"],
         "unique_columns": ["snomed_code"]
     }
 }
