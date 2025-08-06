@@ -67,7 +67,7 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 - PostgreSQL server running and schema initialized
 - Environment variables or `.env` file set for DB credentials
 - create database
-- Unzip standardized_vocabularies.zip
+- Unzip standardized_vocabularies.zip into the main directory 
 - Required Python packages:
   
 -run required libraries (`install_required_libraries.py`) in '/scripts'
@@ -79,7 +79,14 @@ This README outlines the steps to run the ETL (Extract, Transform, Load) process
 
 
 ## ETL Process
-## Step 1: Run Script to create tables
+
+## Step 1.0: Run Script to extract zipped folder
+-if you did not manually unzip standardized_vocabularies, run this command:
+ ```bash
+python unzip_vocabulary_folder.py
+ ```
+
+## Step 1.1: Run Script to create tables
  ```bash
 python scripts/create_database_tables.py
  ```
